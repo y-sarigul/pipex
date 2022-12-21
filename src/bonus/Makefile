@@ -6,16 +6,20 @@
 #    By: msarigul <msarigul@student.42kocaeli.com.  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/02 10:09:01 by msarigul          #+#    #+#              #
-#    Updated: 2022/12/21 21:06:39 by msarigul         ###   ########.tr        #
+#    Updated: 2022/12/21 21:08:36 by msarigul         ###   ########.tr        #
 #                                                                              #
 # **************************************************************************** #
 
-OBJDIR	:= ../objects
+OBJDIR	:= ../../objects
 NAME	:= $(OBJDIR)/libft.a
-CFLAGS	:= -Wall -Wextra -Werror -I ../include -c
-FILES	:= error.c\
-	childs.c\
-	free.c
+CFLAGS	:= -Wall -Wextra -Werror -I ../../include -c
+FILES	:= child_bounus.c\
+	error_bonus.c\
+	files_bonus.c\
+	files_bonus.c\
+	free_bonus.c\
+	here_doc_bonus.c\
+	pipex_bonus.c\
 
 OBJ		:= $(FILES:%.c=$(OBJDIR)/%.o)
 

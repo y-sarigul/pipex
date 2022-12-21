@@ -1,28 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   error_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: msarigul <msarigul@student.42kocaeli.com.  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/08/06 23:21:40 by msarigul          #+#    #+#             */
-/*   Updated: 2022/12/21 21:36:46 by msarigul         ###   ########.tr       */
+/*   Created: 2022/12/21 14:31:54 by msarigul          #+#    #+#             */
+/*   Updated: 2022/12/21 14:32:09 by msarigul         ###   ########.tr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#include "pipex_bonus.h"
 
-# include <stdlib.h>
-# include "libft.h"
-# include "pipex.h"
-#  define BUFFER_SIZE 1000
+int	msg(char *err)
+{
+	write(2, err, ft_strlen(err));
+	return (1);
+}
 
-char	*get_next_line(int fd);
-char	*ft_read_to_static(int fd, char *left_str);
-char	*ft_gnl_strchr(char *s, int c);
-char	*ft_gnl_strjoin(char *left_str, char *buff);
-char	*ft_get_line(char *left_str);
-char	*ft_new_left_str(char *left_str);
+void	msg_pipe(char *arg)
+{
+	write(2, ERR_CMD, ft_strlen(ERR_CMD));
+	write(2, arg, ft_strlen(arg));
+	write(2, "\n", 1);
+}
 
-#endif
+void	msg_error(char *err)
+{
+	perror(err);
+	exit (1);
+}

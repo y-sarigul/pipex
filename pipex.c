@@ -5,34 +5,51 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: msarigul <msarigul@student.42kocaeli.com.  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/18 20:27:29 by msarigul          #+#    #+#             */
-/*   Updated: 2022/12/18 20:58:47 by msarigul         ###   ########.tr       */
+/*   Created: 2022/12/21 14:30:11 by msarigul          #+#    #+#             */
+/*   Updated: 2022/12/21 21:39:25 by msarigul         ###   ########.tr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-int main(int argc, char **argv, char **evnp)
+char	*find_path(char **envp)
 {
-	int	fd[2];
-	int	pid;
+	while (ft_strncmp("PATH", *envp, 4))
+		envp++;
+	return (*envp + 5);
+}
 
-	if (argc == 5)
-	{
-		if ((pipe(fd)) == -1)
-			ft_error("Pipe");
-		pid = fork();
-		if (pid == -1)
-			ft_error("Pid");
-		if (pid == 0)
-		{
-			ft_child_process(fd, 
-		}
-		else if (pid > 0)
-		{
+void	close_pipes(t_pipex *pipex)
+{
+	close(pipex->tube[0]);
+	close(pipex->tube[1]);
+}
 
-		}
-	}
-	else 
-		ft_error("Argv");
-}	
+int	main(int argc, char *argv[], char *envp[])
+{
+	t_pipex	pipex;
+
+	if (argc != 5)
+		return (msg(ERR_INPUT));
+	pipex.infile = open(argv[1], O_RDONLY);
+	if (pipex.infile < 0)
+		msg_error(ERR_INFILE);
+	pipex.outfile = open(argv[argc - 1], O_TRUNC | O_CREAT | O_RDWR, 0000644);
+	if (pipex.outfile < 0)
+		msg_error(ERR_OUTFILE);
+	if (pipe(pipex.tube) < 0)
+		msg_error(ERR_PIPE);
+	pipex.paths = find_path(envp);
+	pipex.cmd_paths = ft_split(pipex.paths, ':');
+	pipex.pid1 = fork();
+	if (pipex.pid1 == 0)
+		first_child(pipex, argv, envp);
+	pipex.pid2 = fork();
+	if (pipex.pid2 == 0)
+		second_child(pipex, argv, envp);
+	close_pipes(&pipex);
+	waitpid(pipex.pid1, NULL, 0);
+	waitpid(pipex.pid2, NULL, 0);
+	parent_free(&pipex);
+	return (0);
+}

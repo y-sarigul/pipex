@@ -1,28 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: msarigul <msarigul@student.42kocaeli.com.  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/08/06 23:21:40 by msarigul          #+#    #+#             */
-/*   Updated: 2022/12/21 21:36:46 by msarigul         ###   ########.tr       */
+/*   Created: 2022/12/21 14:31:26 by msarigul          #+#    #+#             */
+/*   Updated: 2022/12/21 14:31:27 by msarigul         ###   ########.tr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#include "pipex.h"
 
-# include <stdlib.h>
-# include "libft.h"
-# include "pipex.h"
-#  define BUFFER_SIZE 1000
+void	parent_free(t_pipex *pipex)
+{
+	int	i;
 
-char	*get_next_line(int fd);
-char	*ft_read_to_static(int fd, char *left_str);
-char	*ft_gnl_strchr(char *s, int c);
-char	*ft_gnl_strjoin(char *left_str, char *buff);
-char	*ft_get_line(char *left_str);
-char	*ft_new_left_str(char *left_str);
+	i = 0;
+	close(pipex->infile);
+	close(pipex->outfile);
+	while (pipex->cmd_paths[i])
+	{
+		free(pipex->cmd_paths[i]);
+		i++;
+	}
+	free(pipex->cmd_paths);
+}
 
-#endif
+void	child_free(t_pipex *pipex)
+{
+	int	i;
+
+	i = 0;
+	while (pipex->cmd_args[i])
+	{
+		free(pipex->cmd_args[i]);
+		i++;
+	}
+	free(pipex->cmd_args);
+	free(pipex->cmd);
+}

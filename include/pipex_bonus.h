@@ -1,20 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.h                                            :+:      :+:    :+:   */
+/*   pipex_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: msarigul <msarigul@student.42kocaeli.com.  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/21 21:31:24 by msarigul          #+#    #+#             */
-/*   Updated: 2022/12/21 21:38:01 by msarigul         ###   ########.tr       */
+/*   Created: 2022/12/21 21:32:43 by msarigul          #+#    #+#             */
+/*   Updated: 2022/12/21 21:34:21 by msarigul         ###   ########.tr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPEX_H
-#define PIPEX_H
+#ifndef PIPEX_BONUS_H
+# define PIPEX_BONUS_H
 
 # include <unistd.h>
 # include <sys/types.h>
+# include <sys/uio.h>
 # include <stdlib.h>
 # include <fcntl.h>
 # include <sys/wait.h>
@@ -27,31 +28,49 @@
 # define ERR_OUTFILE "Outfile"
 # define ERR_INPUT "Invalid number of arguments.\n"
 # define ERR_PIPE "Pipe"
-# define ERR_CMD "Command not found\n"
+# define ERR_ENVP "Environment"
+# define ERR_CMD "Command not found: "
+# define ERR_HEREDOC "here_doc"
 
-typedef struct s_pipex
+typedef struct s_ppxb
 {
-	pid_t	pid1;
-	pid_t	pid2;
-	int		tube[2];
 	int		infile;
 	int		outfile;
-	char	*paths;
+	char	*env_path;
 	char	**cmd_paths;
-	char	**cmd_args;
 	char	*cmd;
-}t_pipex;
+	char	**cmd_args;
+	int		here_doc;
+	pid_t	pid;
+	int		cmd_nmbs;
+	int		pipe_nmbs;
+	int		*pipe;
+	int		idx;
+}t_ppxb;
 
-/* childs.c */
-void	first_child(t_pipex pipex, char *argv[], char *envp[]);
-void	second_child(t_pipex pipex, char *argv[], char *envp[]);
+/* pipex_bonus.c */
+void	close_pipes(t_ppxb *pipex);
+
+/* child_bonus.c */
+void	child(t_ppxb pipex, char **argv, char **envp);
 
 /* free.c */
-void	parent_free(t_pipex *pipex);
-void	child_free(t_pipex *pipex);
+void	parent_free(t_ppxb *pipex);
+void	child_free(t_ppxb *pipex);
+void	pipe_free(t_ppxb *pipex);
 
-/* error.c */
+/* files_bonus.c */
+char	*find_path(char **envp);
+void	get_infile(char **argv, t_ppxb *pipex);
+void	get_outfile(char *argv, t_ppxb *pipex);
+
+/* here_doc_bonus.c */
+int		args_in(char *arg, t_ppxb *pipex);
+void	here_doc(char *argv, t_ppxb *pipex);
+
+/* error_bonus.c */
 void	msg_error(char *err);
+void	msg_pipe(char *arg);
 int		msg(char *err);
 
 /* funcions */

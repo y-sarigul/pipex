@@ -6,7 +6,7 @@
 #    By: msarigul <msarigul@student.42kocaeli.com.  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/02 10:02:09 by msarigul          #+#    #+#              #
-#    Updated: 2022/12/18 20:42:38 by msarigul         ###   ########.tr        #
+#    Updated: 2022/12/21 21:41:23 by msarigul         ###   ########.tr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,12 +17,13 @@ LIBFT		:= $(OBJDIR)/libft.a
 FT_PRINTF	:= $(OBJDIR)/ft_printf.a
 GNL			:= $(OBJEDIR)/get_next_line.a
 SRC			:= $(OBJEDIR)/src.a
-CC		:= cc
-CFLAGS	:= -Wall -Wextra -Werror -I ./include
+BONUS		:= $(OBJEDIR)/bonus.a
+CC			:= cc
+CFLAGS		:= -Wall -Wextra -Werror -I ./include
 
 $(NAME): $(OBJDIR) $(LIBFT) $(FT_PRINTF) $(GNL) $(SRC)
 	@ar -rcs $(NAME) $(OBJDIR)/*.o 
-	@gcc pipex.c pipex.a -I ./include -o pipex
+	@gcc ./pipex.c pipex.a -I ./include -o pipex
 
 $(OBJDIR):
 	@mkdir -p $(OBJDIR)
@@ -46,10 +47,9 @@ $(SRC):
 
 all: $(NAME)
 
-checker : $(OBJDIR) $(LIBFT) $(FT_PRINTF) $(GNL) $(ARG) $(SORT) $(ROTATE) $(UTILS) $(QUICK) 
+bonus : $(OBJDIR) $(LIBFT) $(FT_PRINTF) $(GNL) 
 	@ar -rcs $(NAME) $(OBJDIR)/*.o 
-	@gcc ./src/checker.c push_swap.a -I ./include -o checker
-
+	@gcc ./src/bonus/pipex_bonus.c pipex_bonus.a -I ./include -o pipex_bonus
 
 clean:
 	@rm -f $(OBJDIR)/*.o
@@ -57,11 +57,13 @@ clean:
 fclean: clean
 	@rm -f $(NAME)
 	@rm -rf $(OBJDIR)
+	@rm -rf pipex
 
 re: fclean all
 
-v:
-	@pip3 install push_swap_gui
-	@python3 -m push_swap_gui
+m : 
+	@gcc pipex.c pipex.a -I ./include -o pipex
+	@./pipex
+	@rm pipex
 
 .PHONY: all re clean fclean m
