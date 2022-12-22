@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msarigul <msarigul@student.42kocaeli.com.  +#+  +:+       +#+        */
+/*   By: msarigul <msarigul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 14:30:11 by msarigul          #+#    #+#             */
-/*   Updated: 2022/12/21 21:39:25 by msarigul         ###   ########.tr       */
+/*   Updated: 2022/12/22 19:16:35 by msarigul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	main(int argc, char *argv[], char *envp[])
 	pipex.infile = open(argv[1], O_RDONLY);
 	if (pipex.infile < 0)
 		msg_error(ERR_INFILE);
-	pipex.outfile = open(argv[argc - 1], O_TRUNC | O_CREAT | O_RDWR, 0000644);
+	pipex.outfile = open(argv[argc - 1], O_TRUNC | O_CREAT | O_RDWR, 0644);
 	if (pipex.outfile < 0)
 		msg_error(ERR_OUTFILE);
 	if (pipe(pipex.tube) < 0)

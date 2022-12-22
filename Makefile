@@ -6,7 +6,7 @@
 #    By: msarigul <msarigul@student.42kocaeli.com.  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/02 10:02:09 by msarigul          #+#    #+#              #
-#    Updated: 2022/12/21 21:41:23 by msarigul         ###   ########.tr        #
+#    Updated: 2022/12/22 22:27:58 by msarigul         ###   ########.tr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,6 @@ LIBFT		:= $(OBJDIR)/libft.a
 FT_PRINTF	:= $(OBJDIR)/ft_printf.a
 GNL			:= $(OBJEDIR)/get_next_line.a
 SRC			:= $(OBJEDIR)/src.a
-BONUS		:= $(OBJEDIR)/bonus.a
 CC			:= cc
 CFLAGS		:= -Wall -Wextra -Werror -I ./include
 
@@ -46,10 +45,6 @@ $(SRC):
 	@make -C src
 
 all: $(NAME)
-
-bonus : $(OBJDIR) $(LIBFT) $(FT_PRINTF) $(GNL) 
-	@ar -rcs $(NAME) $(OBJDIR)/*.o 
-	@gcc ./src/bonus/pipex_bonus.c pipex_bonus.a -I ./include -o pipex_bonus
 
 clean:
 	@rm -f $(OBJDIR)/*.o
