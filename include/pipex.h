@@ -6,12 +6,12 @@
 /*   By: msarigul <msarigul@student.42kocaeli.com.  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 21:31:24 by msarigul          #+#    #+#             */
-/*   Updated: 2022/12/21 21:38:01 by msarigul         ###   ########.tr       */
+/*   Updated: 2022/12/22 22:30:42 by msarigul         ###   ########.tr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PIPEX_H
-#define PIPEX_H
+# define PIPEX_H
 
 # include <unistd.h>
 # include <sys/types.h>
